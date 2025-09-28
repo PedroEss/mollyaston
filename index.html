@@ -1,0 +1,361 @@
+<!doctype html>
+<html lang="pl">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <title>Hodowla Samoyedów – Molly × Aston</title>
+  <meta name="description" content="Profesjonalna strona hodowli psów rasy Samoyed. Rodzice: Molly i Aston. Galeria szczeniąt, zdjęcia i wideo." />
+  <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+  <style>
+    :root {
+      --bg: #0f1115;
+      --card: #151823;
+      --soft: #1d2130;
+      --text: #ecf1f7;
+      --muted: #9aa4b2;
+      --accent: #7cc0ff;
+      --accent-2: #a7e0ff;
+      --radius: 16px;
+    }
+    * { box-sizing: border-box; }
+    html, body { height: 100%; }
+    body {
+      margin: 0;
+      font-family: ui-sans-serif, system-ui, -apple-system, Segoe UI, Roboto, Helvetica, Arial, "Apple Color Emoji", "Segoe UI Emoji";
+      background: radial-gradient(1200px 600px at 80% -10%, #1b2131 0%, var(--bg) 55%) fixed;
+      color: var(--text);
+      line-height: 1.6;
+      -webkit-font-smoothing: antialiased;
+      -moz-osx-font-smoothing: grayscale;
+    }
+    header {
+      position: sticky;
+      top: 0; z-index: 50;
+      backdrop-filter: saturate(150%) blur(8px);
+      background: color-mix(in oklab, var(--bg) 88%, transparent);
+      border-bottom: 1px solid #232838;
+    }
+    .container { width: min(1100px, 92vw); margin: 0 auto; }
+    .nav { display:flex; align-items:center; gap: 18px; padding: 14px 0; }
+    .brand { display:flex; align-items:center; gap: 12px; font-weight: 700; letter-spacing:.3px; }
+    .brand .logo { width: 38px; height: 38px; border-radius: 50%; background: linear-gradient(135deg, var(--accent), var(--accent-2)); display:grid; place-items:center; color:#0a0e17; font-weight:900; }
+    .nav a { color: var(--muted); text-decoration: none; padding: 8px 12px; border-radius: 999px; }
+    .nav a:hover, .nav a:focus { color: var(--text); background: #20263a; outline: none; }
+
+    .hero { display:grid; gap: 16px; grid-template-columns: 1.4fr 1fr; align-items:center; padding: 36px 0 12px; }
+    .hero h1 { margin: 0; font-size: clamp(28px, 4.5vw, 48px); line-height:1.1; letter-spacing:.2px; }
+    .hero p { color: var(--muted); margin: 6px 0 0; }
+    .hero .card { background: linear-gradient(180deg, #161a28, #10131d); border: 1px solid #232838; border-radius: calc(var(--radius) + 8px); box-shadow: 0 10px 30px rgba(10,12,18,.35) inset, 0 10px 20px rgba(0,0,0,.25); overflow: hidden; }
+    .hero .cover { aspect-ratio: 16/10; width: 100%; object-fit: cover; display:block; filter: saturate(1.1) contrast(1.05); }
+
+    section { padding: 28px 0 10px; }
+    h2 { font-size: clamp(22px, 3.2vw, 32px); letter-spacing:.2px; margin: 12px 0 6px; }
+    .muted { color: var(--muted); font-size: 14px; }
+
+    /* Cards */
+    .grid { display:grid; gap: 16px; grid-template-columns: repeat(12, 1fr); }
+    .col-6 { grid-column: span 6; }
+    .col-4 { grid-column: span 4; }
+    .col-12 { grid-column: span 12; }
+    @media (max-width: 900px) { .hero { grid-template-columns: 1fr; } .col-6, .col-4 { grid-column: span 12; } }
+
+    .card {
+      background: var(--card);
+      border: 1px solid #232838;
+      border-radius: var(--radius);
+      overflow: hidden;
+      position: relative;
+      transition: transform .2s ease, box-shadow .2s ease, border-color .2s ease;
+    }
+    .card:hover { transform: translateY(-2px); box-shadow: 0 12px 24px rgba(0,0,0,.35); border-color: #2f3650; }
+    .media { position: relative; }
+    .media img { display:block; width:100%; aspect-ratio: 4/3; object-fit: cover; }
+    .badge { position: absolute; left: 10px; top: 10px; background: #0b101a; color: var(--text); border: 1px solid #2b344b; padding: 4px 10px; border-radius: 999px; font-size: 12px; letter-spacing:.3px; }
+    .content { padding: 12px 14px 14px; }
+    .content h3 { margin: 0 0 4px; font-size: 18px; }
+    .row { display:flex; gap: 10px; align-items:center; }
+    .chip { background:#101521; color: var(--muted); border:1px solid #242c42; padding:6px 10px; border-radius:999px; font-size:12px; }
+
+    /* Puppies grid */
+    .puppies { display:grid; gap: 14px; grid-template-columns: repeat(auto-fill, minmax(220px, 1fr)); }
+    .puppy-card { cursor: pointer; }
+    .puppy-card .name { display:flex; align-items:center; justify-content:space-between; gap: 8px; }
+    .puppy-card .name span { color: var(--muted); font-size: 12px; }
+
+    /* Modal */
+    .modal { position: fixed; inset: 0; display:none; align-items:center; justify-content:center; background: rgba(4,7,12,.65); backdrop-filter: blur(6px); z-index: 100; }
+    .modal[open] { display:flex; }
+    .modal-dialog { width: min(1000px, 92vw); background: var(--soft); border: 1px solid #2a3146; border-radius: calc(var(--radius) + 6px); overflow: hidden; }
+    .modal-head { display:flex; align-items:center; justify-content:space-between; padding: 10px 12px; border-bottom: 1px solid #283048; background: linear-gradient(180deg, #151a29, #111521); }
+    .modal-head h3 { margin: 0; font-size: 18px; letter-spacing:.2px; }
+    .xbtn { all: unset; cursor: pointer; padding: 6px 10px; border-radius: 10px; color: var(--muted); }
+    .xbtn:hover, .xbtn:focus { background: #1b2238; color: var(--text); outline: none; }
+
+    .carousel { position: relative; }
+    .carousel media-element { display:block; }
+    .carousel figure { margin: 0; }
+    .carousel img, .carousel video { width: 100%; height: auto; display:block; object-fit: contain; background: #0a0e17; aspect-ratio: 16/9; }
+    .controls { display:flex; justify-content:space-between; align-items:center; padding:10px 12px; border-top: 1px solid #283048; background: #111521; gap: 10px; }
+    .btn { all: unset; cursor: pointer; padding: 10px 14px; border-radius: 12px; background: #1a2034; border: 1px solid #2a3350; color: var(--text); font-weight: 600; font-size: 14px; }
+    .btn:hover { background: #222a44; }
+    .dots { display:flex; gap: 6px; align-items:center; overflow:auto; }
+    .dot { width: 8px; height: 8px; border-radius: 999px; background: #2a3350; }
+    .dot[aria-current="true"] { background: var(--accent); }
+
+    footer { border-top: 1px solid #232838; margin-top: 38px; padding: 18px 0 36px; color: var(--muted); font-size: 14px; }
+
+    img[loading="lazy"] { filter: blur(0); transition: filter .3s ease; }
+    @media (prefers-reduced-motion: reduce) {
+      .card, .btn { transition: none; }
+    }
+  </style>
+</head>
+<body>
+  <header>
+    <div class="container nav" role="navigation" aria-label="Główna nawigacja">
+      <div class="brand"><div class="logo">S</div> Samoyed • Hodowla</div>
+      <nav style="margin-left:auto; display:flex; gap:6px;">
+        <a href="#rodzice">Rodzice</a>
+        <a href="#szczenieta">Szczenięta</a>
+        <a href="#kontakt">Kontakt</a>
+      </nav>
+    </div>
+  </header>
+
+  <main class="container">
+    <section class="hero">
+      <div>
+        <h1>Samoyed • Miot Molly × Aston</h1>
+        <p>Profesjonalna, lekka i bezpieczna strona hodowli. Poniżej znajdziesz galerię rodziców oraz każdego szczeniaka – po kliknięciu miniatury otworzy się większa galeria ze zdjęciami i wideo.</p>
+        <div class="row" style="margin-top:12px; gap:8px; flex-wrap:wrap;">
+          <span class="chip">Responsywna</span>
+          <span class="chip">Lekka (bez bibliotek)</span>
+          <span class="chip">Dostępna dla czytników</span>
+        </div>
+      </div>
+      <div class="card">
+        <img class="cover" src="images/hero.jpg" alt="Samoyed na tle śniegu" loading="lazy" />
+      </div>
+    </section>
+
+    <section id="rodzice" aria-labelledby="rodzice-heading">
+      <h2 id="rodzice-heading">Rodzice</h2>
+      <p class="muted">Najpierw prezentujemy mamę i tatę miotu.</p>
+      <div class="grid" style="margin-top:10px;">
+        <article class="card col-6" aria-labelledby="molly-heading">
+          <div class="media">
+            <img src="images/parents/molly-1.jpg" alt="Molly – matka, Samoyed" loading="lazy" />
+            <span class="badge">Matka</span>
+          </div>
+          <div class="content">
+            <h3 id="molly-heading">Molly</h3>
+            <div class="row">
+              <span class="chip">zdrowie: HD-A, ED-0/0</span>
+              <span class="chip">champion PL</span>
+            </div>
+          </div>
+        </article>
+        <article class="card col-6" aria-labelledby="aston-heading">
+          <div class="media">
+            <img src="images/parents/aston-1.jpg" alt="Aston – ojciec, Samoyed" loading="lazy" />
+            <span class="badge">Ojciec</span>
+          </div>
+          <div class="content">
+            <h3 id="aston-heading">Aston</h3>
+            <div class="row">
+              <span class="chip">zdrowie: HD-A, ED-0/0</span>
+              <span class="chip">interchampion</span>
+            </div>
+          </div>
+        </article>
+      </div>
+    </section>
+
+    <section id="szczenieta" aria-labelledby="puppies-heading">
+      <h2 id="puppies-heading">Szczenięta</h2>
+      <p class="muted">Kliknij w miniaturę, aby otworzyć galerię ze zdjęciami i filmami danego szczeniaka.</p>
+
+      <div id="puppiesGrid" class="puppies" role="list"></div>
+    </section>
+
+    <section id="kontakt" aria-labelledby="contact-heading">
+      <h2 id="contact-heading">Kontakt</h2>
+      <div class="grid">
+        <div class="card col-6">
+          <div class="content">
+            <h3>Dane hodowli</h3>
+            <p>Hodowla Samoyedów „Biały Uśmiech”<br>
+               e‑mail: <a href="mailto:kontakt@samoyed-hodowla.pl">kontakt@samoyed-hodowla.pl</a><br>
+               tel.: <a href="tel:+48123123123">+48 123 123 123</a>
+            </p>
+          </div>
+        </div>
+        <div class="card col-6">
+          <div class="content">
+            <h3>Odwiedź nas na social media</h3>
+            <p class="muted">(opcjonalnie wstaw linki do Facebook/Instagram/TikTok)</p>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <footer>
+      <div class="container">
+        © <span id="year"></span> Hodowla Samoyedów • Projekt i wdrożenie statyczne. Brak ciasteczek.
+      </div>
+    </footer>
+  </main>
+
+  <!-- Modal Gallery -->
+  <dialog class="modal" id="galleryModal" aria-modal="true" aria-labelledby="modalTitle">
+    <div class="modal-dialog" role="document">
+      <div class="modal-head">
+        <h3 id="modalTitle">Galeria</h3>
+        <button class="xbtn" id="closeModal" aria-label="Zamknij galerię">✕</button>
+      </div>
+      <div class="carousel">
+        <figure id="carouselFigure"></figure>
+      </div>
+      <div class="controls">
+        <button class="btn" id="prevBtn" aria-label="Poprzedni">⟵ Poprzedni</button>
+        <div class="dots" id="dots" aria-label="Pozycja na liście podglądów"></div>
+        <button class="btn" id="nextBtn" aria-label="Następny">Następny ⟶</button>
+      </div>
+    </div>
+  </dialog>
+
+  <script>
+    // ===== KONFIGURACJA DANYCH =====
+    // Dodaj/edytuj szczenięta poniżej. Każdy element ma: id, name, thumb (miniatura), media[] (lista zdj/filmów)
+    // Element media może być typu image {type:'img', src:'ścieżka', alt:'opis'} lub video {type:'video', src:'ścieżka', poster:'miniatura.jpg'}
+    const PUPPIES = [
+      {
+        id: 'arwen',
+        name: 'Arwen',
+        sex: 'suczka',
+        thumb: 'images/puppies/arwen/thumb.jpg',
+        media: [
+          { type: 'img', src: 'images/puppies/arwen/1.jpg', alt: 'Arwen – portret' },
+          { type: 'img', src: 'images/puppies/arwen/2.jpg', alt: 'Arwen na trawie' },
+          { type: 'video', src: 'images/puppies/arwen/clip.mp4', poster: 'images/puppies/arwen/poster.jpg' },
+        ]
+      },
+      {
+        id: 'boris',
+        name: 'Boris',
+        sex: 'piesek',
+        thumb: 'images/puppies/boris/thumb.jpg',
+        media: [
+          { type: 'img', src: 'images/puppies/boris/1.jpg', alt: 'Boris – portret' },
+          { type: 'img', src: 'images/puppies/boris/2.jpg', alt: 'Boris bawi się' },
+          { type: 'img', src: 'images/puppies/boris/3.jpg', alt: 'Boris śpi' },
+        ]
+      },
+      {
+        id: 'cora',
+        name: 'Cora',
+        sex: 'suczka',
+        thumb: 'images/puppies/cora/thumb.jpg',
+        media: [
+          { type: 'img', src: 'images/puppies/cora/1.jpg', alt: 'Cora – portret' },
+          { type: 'video', src: 'images/puppies/cora/clip.mp4', poster: 'images/puppies/cora/poster.jpg' },
+        ]
+      },
+      // Dodaj więcej szczeniąt wg schematu powyżej
+    ];
+
+    // ===== GENEROWANIE SIATKI SZCZENIĄT =====
+    const grid = document.getElementById('puppiesGrid');
+    function puppyCard(p){
+      const li = document.createElement('article');
+      li.className = 'card puppy-card';
+      li.setAttribute('role','listitem');
+      li.setAttribute('tabindex','0');
+      li.dataset.id = p.id;
+      li.innerHTML = `
+        <div class="media">
+          <img src="${p.thumb}" alt="${p.name} – miniatura" loading="lazy" />
+          <span class="badge">${p.sex}</span>
+        </div>
+        <div class="content">
+          <div class="name"><h3>${p.name}</h3><span>${p.media.length} ujęcia</span></div>
+        </div>`;
+      li.addEventListener('click',()=> openModal(p));
+      li.addEventListener('keyup',(e)=>{ if(e.key==='Enter' || e.key===' ') openModal(p); });
+      return li;
+    }
+    PUPPIES.forEach(p => grid.appendChild(puppyCard(p)));
+
+    // ===== MODAL + KARUZELA =====
+    const modal = document.getElementById('galleryModal');
+    const figure = document.getElementById('carouselFigure');
+    const dots = document.getElementById('dots');
+    const closeBtn = document.getElementById('closeModal');
+    const prevBtn = document.getElementById('prevBtn');
+    const nextBtn = document.getElementById('nextBtn');
+
+    let active = { index: 0, puppy: null };
+
+    function renderMedia(item){
+      if(item.type === 'img'){
+        return `<img src="${item.src}" alt="${item.alt || ''}" loading="lazy"/>`;
+      }
+      if(item.type === 'video'){
+        return `<video src="${item.src}" ${item.poster?`poster="${item.poster}"`:''} controls preload="metadata"></video>`;
+      }
+      return '';
+    }
+
+    function openModal(p){
+      active = { index: 0, puppy: p };
+      document.getElementById('modalTitle').textContent = `${p.name} – galeria`;
+      updateCarousel();
+      if(typeof modal.showModal === 'function') modal.showModal(); else modal.setAttribute('open','');
+      document.body.style.overflow = 'hidden';
+    }
+
+    function closeModal(){
+      if(typeof modal.close === 'function') modal.close(); else modal.removeAttribute('open');
+      document.body.style.overflow = '';
+      figure.innerHTML = '';
+      dots.innerHTML = '';
+    }
+
+    function updateCarousel(){
+      const { puppy, index } = active;
+      const item = puppy.media[index];
+      figure.innerHTML = renderMedia(item);
+      // dots
+      dots.innerHTML = '';
+      puppy.media.forEach((_, i) => {
+        const d = document.createElement('div');
+        d.className = 'dot';
+        d.setAttribute('aria-current', i === index ? 'true' : 'false');
+        d.title = `${i+1}/${puppy.media.length}`;
+        d.addEventListener('click', ()=> { active.index = i; updateCarousel(); });
+        dots.appendChild(d);
+      });
+    }
+
+    function step(dir){
+      const m = active.puppy.media.length;
+      active.index = (active.index + dir + m) % m;
+      updateCarousel();
+    }
+
+    closeBtn.addEventListener('click', closeModal);
+    modal.addEventListener('click', (e)=> { if(e.target === modal) closeModal(); });
+    prevBtn.addEventListener('click', ()=> step(-1));
+    nextBtn.addEventListener('click', ()=> step(1));
+    window.addEventListener('keydown', (e)=>{
+      if(!modal.open) return;
+      if(e.key==='Escape') closeModal();
+      if(e.key==='ArrowLeft') step(-1);
+      if(e.key==='ArrowRight') step(1);
+    });
+
+    // rok w stopce
+    document.getElementById('year').textContent = new Date().getFullYear();
+  </script>
+</body>
+</html>
